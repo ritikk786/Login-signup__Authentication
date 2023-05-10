@@ -1,12 +1,19 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 
 import classes from './AuthForm.module.css';
-import { json } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
+import Context from '../../Store/context-store';
+
 
 const AuthForm = () => {
+  
+  const navigate = useNavigate();
+
   const [isLogin, setIsLogin] = useState(true);
   const [isloggingin, setIsLoggingin]=useState(false);
 
+  const ctxidToken = useContext(Context)
+  console.log('ctx',ctxidToken.idToken)
   
   const email=useRef();
   const password=useRef();
@@ -50,10 +57,13 @@ const AuthForm = () => {
         })
         console.log(singinresponse)
         const data = await singinresponse.json();
-        console.log(data.idToken)
+        
+        
         if(!singinresponse.ok){
           throw new Error ('Authentication failed !')
         }
+        ctxidToken.saveidToken(data.idToken)
+        navigate('/')
        
       }
       catch(error){
