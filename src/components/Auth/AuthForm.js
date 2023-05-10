@@ -20,7 +20,12 @@ const AuthForm = () => {
     password.current.value='';
   }
 
+
+
+  // function submithandler start from here ------------------------/
+
   const submithandler= async (e)=>{
+
     e.preventDefault();
   // extracting values from ref;
     const enterdEmail=email.current.value;
@@ -31,13 +36,36 @@ const AuthForm = () => {
     setIsLoggingin(true)
 
     if(isLogin){
-      console.log('empty yet')
+      try{
+        const singinresponse= await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAfqsC6GYo0nj89-yXZd7B_H76N1N76_LU',{
+          method:'POST',
+          body: JSON.stringify({
+            email : enterdEmail,
+            password : enterdPassword,
+            returnSecureToken : true,
+          }),
+          headers:{
+            'Content-Type' : 'application/json'
+          }
+        })
+        console.log(singinresponse)
+        const data = await singinresponse.json();
+        console.log(data.idToken)
+        if(!singinresponse.ok){
+          throw new Error ('Authentication failed !')
+        }
+       
+      }
+      catch(error){
+        if(error){
+          alert(error.message)
+        }
+      }
+      // Login condition ends here --/
     }
     else {
       // this work for signup ------/
       try{
-  
-
         const signupresponse= await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAfqsC6GYo0nj89-yXZd7B_H76N1N76_LU',{
           method : 'POST',
           body  : JSON.stringify({
@@ -70,6 +98,7 @@ const AuthForm = () => {
           alert(errormessage)
         }
       }
+      // signup condition ends here -----/
     }
 
 
