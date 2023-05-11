@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useCallback, useState} from "react"
 import Context from "./context-store"
 import { useNavigate } from "react-router-dom"
 
@@ -11,6 +11,11 @@ const ContextProvider = (props)=>{
 
     const userIsLoggedIn = !!idToken
 
+    // if(userIsLoggedIn){
+    //     setTimeout(()=>{localStorage.removeItem('1')},50000)
+
+    // }
+
     const Logouthandler = ()=>{
         console.log('logouthandler')
         localStorage.removeItem('1')
@@ -18,11 +23,20 @@ const ContextProvider = (props)=>{
         navigate('/auth')
     }
 
-    const saveidToken = (id)=>{
+    // Auto Logout condition------
+    if(userIsLoggedIn){
+        setTimeout(()=>{Logouthandler()},60000)
+    }
+    // --------------------/
+
+   
+
+    const saveidToken =useCallback( (id)=>{
         console.log(2)
         localStorage.setItem('1',`${id}`)
         setIdToken(id)
-    }
+    },[setIdToken])
+    
     const store = {
         idToken : idToken,
         isLoggedin:userIsLoggedIn,
