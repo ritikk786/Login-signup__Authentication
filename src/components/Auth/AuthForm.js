@@ -72,6 +72,7 @@ const AuthForm = () => {
         }
       }
       // Login condition ends here --/
+      
     }
     else {
       // this work for signup ------/
