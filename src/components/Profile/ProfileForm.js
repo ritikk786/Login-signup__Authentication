@@ -42,7 +42,10 @@ const ProfileForm = () => {
         throw new Error ('Authentication failed !')
       }
       alert('password changed succesfully')
+     
+      //navigate to welcome page;
      navigate('/')
+
      console.log('after navigae', ctx.idToken)
     }
     catch(error){
