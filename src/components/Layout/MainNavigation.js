@@ -7,7 +7,7 @@ import classes from './MainNavigation.module.css';
 
 const MainNavigation = () => {
   const ctx = useContext(Context)
-  console.log('ctx',ctx.idToken)
+  console.log('ctx idToken',ctx.idToken)
   return (
     <header className={classes.header}>
       <Link to='/'>

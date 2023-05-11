@@ -13,7 +13,7 @@ const AuthForm = () => {
   const [isloggingin, setIsLoggingin]=useState(false);
 
   const ctxidToken = useContext(Context)
-  console.log('ctx',ctxidToken.idToken)
+  console.log('ctx idToken',ctxidToken.idToken)
   
   const email=useRef();
   const password=useRef();
